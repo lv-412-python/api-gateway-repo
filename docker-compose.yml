@@ -1,4 +1,4 @@
-version: '3'
+version: '2.1'
 services:
   nginx: 
     image: nginx:latest
@@ -11,7 +11,6 @@ services:
   users-service:
     image: users-service:latest
     container_name: users-service
-
 
   fields-service:
     image: fields-service:latest
@@ -32,5 +31,26 @@ services:
   db:
     image: postgres:latest
     container_name: postgres-docker
+    volumes:
+      - db-data:/var/lib/postgresql/data
     ports:
       - 8001:5432
+  
+  worker:
+    image: export-worker-service:latest
+    container_name: export-worker
+    depends_on: 
+      - rabbitmq
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+
+  rabbitmq:
+    image: rabbitmq:3
+    container_name: rabbitmq
+    hostname: "rabbitmq"
+    ports:
+      - 5672:5672
+
+volumes:
+  db-data:
