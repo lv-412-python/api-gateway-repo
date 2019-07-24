@@ -40,9 +40,12 @@ services:
     image: export-worker-service:latest
     container_name: export-worker
     depends_on: 
-      - "rabbitMQ"
+      - rabbitmq
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
 
-  rabbitMQ:
+  rabbitmq:
     image: rabbitmq:3
     container_name: rabbitmq
     hostname: "rabbitmq"
