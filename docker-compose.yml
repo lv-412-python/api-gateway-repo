@@ -49,9 +49,9 @@ services:
     ports:
       - 5672:5672
   
-  export-service:
-    image: export-service:latest
-    container_name: export-service
+  # export-service:
+    # image: export-service:latest
+    # container_name: export-service
 
 
 volumes:
